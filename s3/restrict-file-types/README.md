@@ -1,6 +1,6 @@
-# Send notifications on fileupload
+# Restrict file uploads based on file type
 
-An example on how to set up a S3 bucket to send a notification event to a SQS queue when a file was uploaded.
+An example on how to set up a S3 bucket to restrict file uploading based on the file extension.
 
 ## Getting Started
 
@@ -32,15 +32,15 @@ Run the following command replacing `bucket_name` with your bucket name:
 terraform apply -var bucket_name=REPLACE-ME
 ```
 
-### Checking notifications on file upload
+### Upload file
 
-1. Upload a new file to the bucket
+1. Upload a new file to the bucket (it will be rejected as it is not a ZIP file)
     ```
     aws s3 cp upload.me s3://REPLACE-ME
     ```
-1. Run the following command to consume the notification from SQS:
+1. Upload a zip file to the bucket.
     ```
-    go run ReceiveMessage.go -q sqs-for-REPLACE-ME-WITH-BUCKET_NAME
+    aws s3 cp upload.me.zip s3://REPLACE-ME
     ```
 
 ## Tearing down
